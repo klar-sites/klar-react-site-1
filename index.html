@@ -787,6 +787,26 @@
 
       const Router = window.__KLAR_CDN ? MemoryRouter : BrowserRouter;
 
+      // In the Klar editor the app runs on MemoryRouter (no real URL), so every
+      // iframe reload (e.g. Apply HTML) resets it to "/". Persist the current
+      // route to localStorage and restore it as the initial entry so a reload
+      // keeps you on the page you were editing. Editor-only (window.__KLAR_CDN).
+      const KLAR_ROUTE_KEY = "klar:clinic:route";
+      function readStoredRoute() {
+        try {
+          return localStorage.getItem(KLAR_ROUTE_KEY) || "/";
+        } catch (e) {
+          return "/";
+        }
+      }
+      function storeRoute(pathname) {
+        try {
+          localStorage.setItem(KLAR_ROUTE_KEY, pathname);
+        } catch (e) {
+          /* storage unavailable — ignore */
+        }
+      }
+
       // --- Klar content -------------------------------------------------------
       // Read saved :field values from pages.content via the Klar SDK. The project
       // id comes from /klar-project.js (window.__KLAR_PROJECT_ID__), which Klar
@@ -931,6 +951,8 @@
         const { pathname } = useLocation();
         useEffect(() => {
           window.scrollTo(0, 0);
+          // Editor (MemoryRouter): remember the current route across reloads.
+          if (window.__KLAR_CDN) storeRoute(pathname);
         }, [pathname]);
         return null;
       }
@@ -1447,7 +1469,10 @@
       function App() {
         console.log("hehe");
         return (
-          <Router basename={window.__KLAR_BASE || undefined}>
+          <Router
+            basename={window.__KLAR_BASE || undefined}
+            {...(window.__KLAR_CDN ? { initialEntries: [readStoredRoute()] } : {})}
+          >
             <ScrollTop />
             <div className="vkn-app">
               <Header />
