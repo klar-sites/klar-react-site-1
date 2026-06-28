@@ -791,7 +791,14 @@
       // iframe reload (e.g. Apply HTML) resets it to "/". Persist the current
       // route to localStorage and restore it as the initial entry so a reload
       // keeps you on the page you were editing. Editor-only (window.__KLAR_CDN).
-      const KLAR_ROUTE_KEY = "klar:clinic:route";
+      //
+      // Fixed, app-agnostic key so Klar can read it (and decide which route to
+      // load) — do NOT make this app-specific. Sibling of Klar's own "klar"
+      // settings key, not nested inside it. Scoped PER PROJECT so different
+      // projects don't share a route; Klar builds the same key from the active
+      // project id. Falls back to 474 (same default as the SDK client) when
+      // window.__KLAR_PROJECT_ID__ isn't injected.
+      const KLAR_ROUTE_KEY = "klar:spa-route:" + (window.__KLAR_PROJECT_ID__ || 474);
       function readStoredRoute() {
         try {
           return localStorage.getItem(KLAR_ROUTE_KEY) || "/";
