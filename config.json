@@ -38,7 +38,13 @@
             "html": "<article class=\"vkn-treat-card\"><div class=\"vkn-treat-card__img\"><img src=\"https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&amp;fit=crop&amp;w=1600&amp;q=80\" alt=\"Läkare som undersöker en patient\"></div><div class=\"vkn-treat-card__body\"><h3>Hälsoundersökning 7</h3><p>Grundlig genomgång av din hälsa med blodprov, EKG och personlig rådgivning. 7</p><div class=\"vkn-treat-card__meta\"><span class=\"vkn-treat-card__price\">Från 1 290 kr</span><span class=\"vkn-treat-card__time\">60 min</span></div></div></article>",
             "text": "Hälsoundersökning 7Grundlig genomgång av din hälsa med blodprov, EKG och personlig rådgivning. 7Från 1 290 kr60 min"
           }
-        ]
+        ],
+        "ctaTitle": "Osäker på vilken behandling du behöver? 7",
+        "ctaText": "Kontakta oss så hjälper vi dig att hitta rätt utifrån dina behov.7",
+        "ctaBtn": {
+          "href": "/kontakt",
+          "text": "Kontakta oss 7"
+        }
       }
     },
     {
@@ -80,8 +86,14 @@
           }
         ],
         "text": "Hos Vårdkliniken Norden möts du av erfarna specialister i en lugn miljö. Korta väntetider, personlig vård och behandlingar anpassade efter dig. 7",
-        "primaryBtn": "Boka tid 6 →",
-        "ghostBtn": "Se behandlingar 6",
+        "primaryBtn": {
+          "href": "/kontakt",
+          "text": "Boka tid 7 →"
+        },
+        "ghostBtn": {
+          "href": "/behandlingar",
+          "text": "Se behandlingar 7"
+        },
         "image": {
           "src": "https://images.unsplash.com/photo-1666214280557-f1b5022eb634?auto=format&fit=crop&w=1600&q=80",
           "alt": "Ljus och modern vårdmottagning"
@@ -144,7 +156,42 @@
         "aboutImage": {
           "src": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=80",
           "alt": "7 Vårdpersonal i samtal på kliniken"
-        }
+        },
+        "teamHeadEyebrow": "Vårt team 7",
+        "teamHeadTitle": "Möt personalen 7",
+        "teamHeadText": "Engagerade och legitimerade yrkespersoner som brinner för din hälsa. 7",
+        "stats": [
+          {
+            "tag": "div",
+            "html": "<div class=\"vkn-stat\"><div class=\"vkn-stat__num\"><span data-klar-wrap=\"\">12+</span></div><div class=\"vkn-stat__label\"><span data-klar-wrap=\"\">År av erfarenhet</span></div></div>",
+            "text": "12+År av erfarenhet"
+          },
+          {
+            "tag": "div",
+            "html": "<div class=\"vkn-stat\"><div class=\"vkn-stat__num\"><span data-klar-wrap=\"\">15 000+</span></div><div class=\"vkn-stat__label\"><span data-klar-wrap=\"\">Nöjda patienter</span></div></div>",
+            "text": "15 000+Nöjda patienter"
+          },
+          {
+            "tag": "div",
+            "html": "<div class=\"vkn-stat\"><div class=\"vkn-stat__num\"><span data-klar-wrap=\"\">15 000+</span></div><div class=\"vkn-stat__label\"><span data-klar-wrap=\"\">Nöjda patienter</span></div></div>",
+            "text": "15 000+Nöjda patienter"
+          },
+          {
+            "tag": "div",
+            "html": "<div class=\"vkn-stat\"><div class=\"vkn-stat__num\"><span data-klar-wrap=\"\">15 000+</span></div><div class=\"vkn-stat__label\"><span data-klar-wrap=\"\">Nöjda patienter</span></div></div>",
+            "text": "15 000+Nöjda patienter"
+          },
+          {
+            "tag": "div",
+            "html": "<div class=\"vkn-stat\"><div class=\"vkn-stat__num\"><span data-klar-wrap=\"\">15 000+</span></div><div class=\"vkn-stat__label\"><span data-klar-wrap=\"\">Nöjda patienter</span></div></div>",
+            "text": "15 000+Nöjda patienter"
+          },
+          {
+            "tag": "div",
+            "html": "<div class=\"vkn-stat\"><div class=\"vkn-stat__num\"><span data-klar-wrap=\"\">4,9 ★</span></div><div class=\"vkn-stat__label\"><span data-klar-wrap=\"\">Snittbetyg</span></div></div>",
+            "text": "4,9 ★Snittbetyg"
+          }
+        ]
       }
     }
   ],
