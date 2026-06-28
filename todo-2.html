@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A polished monochrome React to-do app with light and dark mode." />
+    <title>Your To Do</title>
+
+    <script>
+      (function todoMono9q8ApplyInitialTheme() {
+        try {
+          var todoMono9q8ThemeKey = "todo-mono-9q8-theme-choice";
+          var todoMono9q8StoredTheme = window.localStorage.getItem(todoMono9q8ThemeKey);
+          var todoMono9q8PrefersDark = window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var todoMono9q8ResolvedTheme =
+            todoMono9q8StoredTheme === "light" || todoMono9q8StoredTheme === "dark" ?
+            todoMono9q8StoredTheme :
+            todoMono9q8PrefersDark ?
+            "dark" :
+            "light";
+
+          document.documentElement.setAttribute("data-theme", todoMono9q8ResolvedTheme);
+          document.documentElement.style.colorScheme = todoMono9q8ResolvedTheme;
+        } catch (todoMono9q8Error) {
+          document.documentElement.setAttribute("data-theme", "light");
+          document.documentElement.style.colorScheme = "light";
+        }
+      })();
+    </script>
+
+    <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
+
+    <style>
+      :root {
+        --todo-mono-9q8-page-bg: #f1f1f1;
+        --todo-mono-9q8-card-bg: #ffffff;
+        --todo-mono-9q8-card-border: rgba(17, 17, 17, 0.035);
+        --todo-mono-9q8-card-shadow: 0 26px 70px rgba(18, 18, 18, 0.075), 0 8px 22px rgba(18, 18, 18, 0.045);
+        --todo-mono-9q8-title-text: #3d3d3d;
+        --todo-mono-9q8-main-text: #333333;
+        --todo-mono-9q8-muted-text: #838383;
+        --todo-mono-9q8-soft-text: #9a9a9a;
+        --todo-mono-9q8-input-line: #9c9c9c;
+        --todo-mono-9q8-input-line-focus: #3f3f3f;
+        --todo-mono-9q8-control-bg: #444444;
+        --todo-mono-9q8-control-text: #ffffff;
+        --todo-mono-9q8-control-bg-hover: #2f2f2f;
+        --todo-mono-9q8-task-bg: #ffffff;
+        --todo-mono-9q8-task-bg-hover: #fafafa;
+        --todo-mono-9q8-task-border: #bdbdbd;
+        --todo-mono-9q8-task-border-hover: #9f9f9f;
+        --todo-mono-9q8-checkbox-bg: #ffffff;
+        --todo-mono-9q8-checkbox-border: #b0b0b0;
+        --todo-mono-9q8-checkbox-checked-bg: #777777;
+        --todo-mono-9q8-checkbox-checked-border: #777777;
+        --todo-mono-9q8-checkbox-check: #ffffff;
+        --todo-mono-9q8-delete-text: #555555;
+        --todo-mono-9q8-delete-text-hover: #1f1f1f;
+        --todo-mono-9q8-focus-ring: rgba(61, 61, 61, 0.28);
+        --todo-mono-9q8-edit-bg: #fbfbfb;
+        --todo-mono-9q8-empty-bg: rgba(0, 0, 0, 0.025);
+        --todo-mono-9q8-action-text: #5f5f5f;
+        --todo-mono-9q8-action-text-hover: #292929;
+        --todo-mono-9q8-radius-card: 18px;
+        --todo-mono-9q8-radius-pill: 12px;
+        --todo-mono-9q8-radius-control: 10px;
+        --todo-mono-9q8-motion-fast: 160ms;
+        --todo-mono-9q8-motion-med: 260ms;
+        --todo-mono-9q8-motion-slow: 420ms;
+      }
+
+      html[data-theme="dark"] {
+        --todo-mono-9q8-page-bg: #0e0e0e;
+        --todo-mono-9q8-card-bg: #1a1a1a;
+        --todo-mono-9q8-card-border: rgba(255, 255, 255, 0.09);
+        --todo-mono-9q8-card-shadow: 0 28px 70px rgba(0, 0, 0, 0.26);
+        --todo-mono-9q8-title-text: #f2f2f2;
+        --todo-mono-9q8-main-text: #eeeeee;
+        --todo-mono-9q8-muted-text: #a8a8a8;
+        --todo-mono-9q8-soft-text: #8f8f8f;
+        --todo-mono-9q8-input-line: #666666;
+        --todo-mono-9q8-input-line-focus: #e6e6e6;
+        --todo-mono-9q8-control-bg: #f0f0f0;
+        --todo-mono-9q8-control-text: #141414;
+        --todo-mono-9q8-control-bg-hover: #ffffff;
+        --todo-mono-9q8-task-bg: #232323;
+        --todo-mono-9q8-task-bg-hover: #282828;
+        --todo-mono-9q8-task-border: #494949;
+        --todo-mono-9q8-task-border-hover: #696969;
+        --todo-mono-9q8-checkbox-bg: #232323;
+        --todo-mono-9q8-checkbox-border: #747474;
+        --todo-mono-9q8-checkbox-checked-bg: #d7d7d7;
+        --todo-mono-9q8-checkbox-checked-border: #d7d7d7;
+        --todo-mono-9q8-checkbox-check: #141414;
+        --todo-mono-9q8-delete-text: #b6b6b6;
+        --todo-mono-9q8-delete-text-hover: #ffffff;
+        --todo-mono-9q8-focus-ring: rgba(238, 238, 238, 0.34);
+        --todo-mono-9q8-edit-bg: #202020;
+        --todo-mono-9q8-empty-bg: rgba(255, 255, 255, 0.04);
+        --todo-mono-9q8-action-text: #b5b5b5;
+        --todo-mono-9q8-action-text-hover: #f4f4f4;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        min-height: 100%;
+        background: var(--todo-mono-9q8-page-bg);
+        transition: background-color var(--todo-mono-9q8-motion-slow) ease;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        background:
+          radial-gradient(circle at 50% 16%, rgba(255, 255, 255, 0.34), transparent 34rem),
+          var(--todo-mono-9q8-page-bg);
+        color: var(--todo-mono-9q8-main-text);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        transition: background-color var(--todo-mono-9q8-motion-slow) ease, color var(--todo-mono-9q8-motion-slow) ease;
+      }
+
+      html[data-theme="dark"] body {
+        background:
+          radial-gradient(circle at 50% 8%, rgba(255, 255, 255, 0.055), transparent 32rem),
+          var(--todo-mono-9q8-page-bg);
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      #todo-mono-9q8-root {
+        min-height: 100vh;
+      }
+
+      .todo-mono-9q8-shell {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: clamp(18px, 5vw, 86px);
+      }
+
+      .todo-mono-9q8-card {
+        position: relative;
+        width: min(100%, 1120px);
+        min-height: clamp(560px, 68vh, 720px);
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: clamp(58px, 7.2vw, 108px) clamp(24px, 7vw, 92px);
+        background: var(--todo-mono-9q8-card-bg);
+        border: 1px solid var(--todo-mono-9q8-card-border);
+        border-radius: var(--todo-mono-9q8-radius-card);
+        box-shadow: var(--todo-mono-9q8-card-shadow);
+        transition:
+          background-color var(--todo-mono-9q8-motion-slow) ease,
+          border-color var(--todo-mono-9q8-motion-slow) ease,
+          box-shadow var(--todo-mono-9q8-motion-slow) ease;
+      }
+
+      .todo-mono-9q8-panel {
+        width: min(100%, 430px);
+      }
+
+      .todo-mono-9q8-topbar {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 24px;
+      }
+
+      .todo-mono-9q8-heading {
+        margin: 0;
+        color: var(--todo-mono-9q8-title-text);
+        font-size: clamp(1.52rem, 1.15rem + 1.15vw, 2rem);
+        font-weight: 800;
+        letter-spacing: -0.045em;
+        line-height: 1.06;
+        transition: color var(--todo-mono-9q8-motion-slow) ease;
+      }
+
+      .todo-mono-9q8-auth-area {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+        min-width: 0;
+        padding-top: 1px;
+      }
+
+      .todo-mono-9q8-auth-name {
+        max-width: 142px;
+        overflow: hidden;
+        color: var(--todo-mono-9q8-muted-text);
+        font-size: 0.78rem;
+        font-weight: 750;
+        line-height: 1.25;
+        text-align: right;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        transition: color var(--todo-mono-9q8-motion-slow) ease;
+      }
+
+      .todo-mono-9q8-auth-button {
+        min-height: 32px;
+        border: 1px solid var(--todo-mono-9q8-task-border);
+        border-radius: 999px;
+        background: transparent;
+        color: var(--todo-mono-9q8-action-text);
+        padding: 6px 11px;
+        font-size: 0.78rem;
+        font-weight: 800;
+        cursor: pointer;
+        white-space: nowrap;
+        transition:
+          background-color var(--todo-mono-9q8-motion-fast) ease,
+          border-color var(--todo-mono-9q8-motion-fast) ease,
+          color var(--todo-mono-9q8-motion-fast) ease,
+          opacity var(--todo-mono-9q8-motion-fast) ease,
+          transform var(--todo-mono-9q8-motion-fast) ease;
+      }
+
+      .todo-mono-9q8-auth-button:hover:not(:disabled) {
+        border-color: var(--todo-mono-9q8-task-border-hover);
+        background: var(--todo-mono-9q8-empty-bg);
+        color: var(--todo-mono-9q8-action-text-hover);
+        transform: translateY(-1px);
+      }
+
+      .todo-mono-9q8-auth-button:disabled {
+        cursor: wait;
+        opacity: 0.58;
+      }
+
+      .todo-mono-9q8-auth-button:focus-visible {
+        outline: 3px solid var(--todo-mono-9q8-focus-ring);
+        outline-offset: 3px;
+      }
+
+      .todo-mono-9q8-theme-toggle {
+        position: absolute;
+        top: clamp(18px, 2.5vw, 30px);
+        right: clamp(18px, 2.5vw, 30px);
+        width: 44px;
+        height: 44px;
+        display: inline-grid;
+        place-items: center;
+        border: 1px solid var(--todo-mono-9q8-card-border);
+        border-radius: 999px;
+        background: transparent;
+        color: var(--todo-mono-9q8-muted-text);
+        cursor: pointer;
+        transition:
+          color var(--todo-mono-9q8-motion-fast) ease,
+          background-color var(--todo-mono-9q8-motion-fast) ease,
+          border-color var(--todo-mono-9q8-motion-fast) ease,
+          transform var(--todo-mono-9q8-motion-fast) ease;
+      }
+
+      .todo-mono-9q8-theme-toggle:hover {
+        color: var(--todo-mono-9q8-title-text);
+        background: var(--todo-mono-9q8-empty-bg);
+        transform: translateY(-1px);
+      }
+
+      .todo-mono-9q8-theme-toggle:focus-visible {
+        outline: 3px solid var(--todo-mono-9q8-focus-ring);
+        outline-offset: 3px;
+      }
+
+      .todo-mono-9q8-theme-icon {
+        width: 19px;
+        height: 19px;
+        display: block;
+        transition: transform var(--todo-mono-9q8-motion-med) ease;
+      }
+
+      .todo-mono-9q8-theme-toggle:hover .todo-mono-9q8-theme-icon {
+        transform: rotate(-10deg) scale(1.04);
+      }
+
+      .todo-mono-9q8-entry-form {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 44px;
+        gap: 14px;
+        align-items: end;
+        margin-bottom: 20px;
+      }
+
+      .todo-mono-9q8-new-input {
+        width: 100%;
+        min-height: 44px;
+        border: 0;
+        border-bottom: 1px solid var(--todo-mono-9q8-input-line);
+        border-radius: 0;
+        background: transparent;
+        color: var(--todo-mono-9q8-main-text);
+        padding: 8px 6px 9px;
+        outline: none;
+        transition:
+          border-color var(--todo-mono-9q8-motion-fast) ease,
+          color var(--todo-mono-9q8-motion-slow) ease;
+      }
+
+      .todo-mono-9q8-new-input::placeholder {
+        color: var(--todo-mono-9q8-soft-text);
+        opacity: 1;
+      }
+
+      .todo-mono-9q8-new-input:focus {
+        border-bottom-color: var(--todo-mono-9q8-input-line-focus);
+      }
+
+      .todo-mono-9q8-new-input:focus-visible {
+        box-shadow: 0 8px 0 -5px var(--todo-mono-9q8-focus-ring);
+      }
+
+      .todo-mono-9q8-add-button {
+        width: 44px;
+        height: 44px;
+        display: inline-grid;
+        place-items: center;
+        border: 0;
+        border-radius: var(--todo-mono-9q8-radius-control);
+        background: var(--todo-mono-9q8-control-bg);
+        color: var(--todo-mono-9q8-control-text);
+        cursor: pointer;
+        box-shadow: 0 7px 16px rgba(0, 0, 0, 0.12);
+        transition:
+          background-color var(--todo-mono-9q8-motion-fast) ease,
+          color var(--todo-mono-9q8-motion-fast) ease,
+          transform var(--todo-mono-9q8-motion-fast) ease,
+          box-shadow var(--todo-mono-9q8-motion-fast) ease;
+      }
+
+      .todo-mono-9q8-add-button:hover {
+        background: var(--todo-mono-9q8-control-bg-hover);
+        transform: translateY(-1px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.16);
+      }
+
+      .todo-mono-9q8-add-button:active {
+        transform: translateY(0) scale(0.98);
+      }
+
+      .todo-mono-9q8-add-button:focus-visible {
+        outline: 3px solid var(--todo-mono-9q8-focus-ring);
+        outline-offset: 3px;
+      }
+
+      .todo-mono-9q8-plus-icon {
+        width: 19px;
+        height: 19px;
+        display: block;
+      }
+
+      .todo-mono-9q8-list {
+        display: grid;
+        gap: 16px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .todo-mono-9q8-task-item {
+        animation: todo-mono-9q8-row-in var(--todo-mono-9q8-motion-med) ease both;
+      }
+
+      .todo-mono-9q8-task-item[data-exiting="true"] {
+        pointer-events: none;
+        animation: todo-mono-9q8-row-out var(--todo-mono-9q8-motion-fast) ease both;
+      }
+
+      .todo-mono-9q8-row {
+        min-height: 50px;
+        display: grid;
+        grid-template-columns: 25px minmax(0, 1fr) 36px;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 7px 10px 7px 15px;
+        border: 1px solid var(--todo-mono-9q8-task-border);
+        border-radius: var(--todo-mono-9q8-radius-pill);
+        background: var(--todo-mono-9q8-task-bg);
+        color: var(--todo-mono-9q8-main-text);
+        cursor: pointer;
+        transition:
+          opacity var(--todo-mono-9q8-motion-med) ease,
+          background-color var(--todo-mono-9q8-motion-fast) ease,
+          border-color var(--todo-mono-9q8-motion-fast) ease,
+          transform var(--todo-mono-9q8-motion-fast) ease,
+          color var(--todo-mono-9q8-motion-slow) ease;
+      }
+
+      .todo-mono-9q8-row:hover {
+        background: var(--todo-mono-9q8-task-bg-hover);
+        border-color: var(--todo-mono-9q8-task-border-hover);
+        transform: translateY(-1px);
+      }
+
+      .todo-mono-9q8-row:focus-within {
+        border-color: var(--todo-mono-9q8-task-border-hover);
+        box-shadow: 0 0 0 3px var(--todo-mono-9q8-focus-ring);
+      }
+
+      .todo-mono-9q8-row[data-completed="true"] {
+        opacity: 0.68;
+      }
+
+      .todo-mono-9q8-checkbox {
+        position: relative;
+        width: 18px;
+        height: 18px;
+        margin: 0;
+        border: 1px solid var(--todo-mono-9q8-checkbox-border);
+        border-radius: 4px;
+        appearance: none;
+        -webkit-appearance: none;
+        background: var(--todo-mono-9q8-checkbox-bg);
+        cursor: pointer;
+        transition:
+          background-color var(--todo-mono-9q8-motion-fast) ease,
+          border-color var(--todo-mono-9q8-motion-fast) ease,
+          box-shadow var(--todo-mono-9q8-motion-fast) ease,
+          transform var(--todo-mono-9q8-motion-fast) ease;
+      }
+
+      .todo-mono-9q8-checkbox::after {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 2px;
+        width: 5px;
+        height: 9px;
+        border: solid var(--todo-mono-9q8-checkbox-check);
+        border-width: 0 2px 2px 0;
+        opacity: 0;
+        transform: rotate(42deg) scale(0.55);
+        transform-origin: center;
+        transition:
+          opacity var(--todo-mono-9q8-motion-fast) ease,
+          transform var(--todo-mono-9q8-motion-fast) ease;
+      }
+
+      .todo-mono-9q8-checkbox:checked {
+        border-color: var(--todo-mono-9q8-checkbox-checked-border);
+        background-color: var(--todo-mono-9q8-checkbox-checked-bg);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+      }
+
+      .todo-mono-9q8-checkbox:checked::after {
+        opacity: 1;
+        transform: rotate(42deg) scale(1);
+      }
+
+      .todo-mono-9q8-checkbox:focus-visible {
+        outline: 3px solid var(--todo-mono-9q8-focus-ring);
+        outline-offset: 3px;
+      }
+
+      .todo-mono-9q8-checkbox:active {
+        transform: scale(0.94);
+      }
+
+      .todo-mono-9q8-hidden-label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+        clip-path: inset(50%);
+      }
+
+      .todo-mono-9q8-text-button {
+        min-width: 0;
+        width: 100%;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        text-align: left;
+        padding: 8px 0;
+        cursor: inherit;
+      }
+
+      .todo-mono-9q8-text-button:focus-visible {
+        outline: 3px solid var(--todo-mono-9q8-focus-ring);
+        outline-offset: 2px;
+        border-radius: 7px;
+      }
+
+      .todo-mono-9q8-task-text {
+        position: relative;
+        display: inline;
+        color: var(--todo-mono-9q8-main-text);
+        font-size: 0.95rem;
+        font-weight: 650;
+        line-height: 1.35;
+        overflow-wrap: anywhere;
+        transition: color var(--todo-mono-9q8-motion-med) ease;
+      }
+
+      .todo-mono-9q8-task-text::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 53%;
+        width: 100%;
+        height: 1.5px;
+        background: currentColor;
+        transform: scaleX(0);
+        transform-origin: left center;
+        transition: transform 220ms ease;
+      }
+
+      .todo-mono-9q8-row[data-completed="true"] .todo-mono-9q8-task-text {
+        color: var(--todo-mono-9q8-muted-text);
+      }
+
+      .todo-mono-9q8-row[data-completed="true"] .todo-mono-9q8-task-text::after {
+        transform: scaleX(1);
+      }
+
+      .todo-mono-9q8-edit-input {
+        min-width: 0;
+        width: 100%;
+        min-height: 36px;
+        border: 1px solid var(--todo-mono-9q8-task-border-hover);
+        border-radius: 8px;
+        background: var(--todo-mono-9q8-edit-bg);
+        color: var(--todo-mono-9q8-main-text);
+        padding: 6px 8px;
+        outline: none;
+        font-size: 0.95rem;
+        font-weight: 650;
+        transition:
+          background-color var(--todo-mono-9q8-motion-slow) ease,
+          color var(--todo-mono-9q8-motion-slow) ease,
+          border-color var(--todo-mono-9q8-motion-fast) ease;
+      }
+
+      .todo-mono-9q8-edit-input:focus-visible {
+        box-shadow: 0 0 0 3px var(--todo-mono-9q8-focus-ring);
+      }
+
+      .todo-mono-9q8-delete-button {
+        width: 36px;
+        height: 36px;
+        display: inline-grid;
+        place-items: center;
+        border: 0;
+        border-radius: 9px;
+        background: transparent;
+        color: var(--todo-mono-9q8-delete-text);
+        cursor: pointer;
+        opacity: 0.8;
+        transition:
+          opacity var(--todo-mono-9q8-motion-fast) ease,
+          color var(--todo-mono-9q8-motion-fast) ease,
+          background-color var(--todo-mono-9q8-motion-fast) ease,
+          transform var(--todo-mono-9q8-motion-fast) ease;
+      }
+
+      .todo-mono-9q8-row:hover .todo-mono-9q8-delete-button,
+      .todo-mono-9q8-delete-button:focus-visible {
+        opacity: 1;
+      }
+
+      .todo-mono-9q8-delete-button:hover {
+        color: var(--todo-mono-9q8-delete-text-hover);
+        background: var(--todo-mono-9q8-empty-bg);
+        transform: scale(1.04);
+      }
+
+      .todo-mono-9q8-delete-button:focus-visible {
+        outline: 3px solid var(--todo-mono-9q8-focus-ring);
+        outline-offset: 2px;
+      }
+
+      .todo-mono-9q8-delete-icon {
+        font-size: 1.35rem;
+        line-height: 1;
+        transform: translateY(-1px);
+      }
+
+      .todo-mono-9q8-empty-state {
+        display: grid;
+        place-items: center;
+        min-height: 154px;
+        margin-top: 4px;
+        padding: 24px;
+        border: 1px dashed var(--todo-mono-9q8-task-border);
+        border-radius: var(--todo-mono-9q8-radius-pill);
+        background: var(--todo-mono-9q8-empty-bg);
+        color: var(--todo-mono-9q8-muted-text);
+        text-align: center;
+        font-size: 0.95rem;
+        font-weight: 650;
+        line-height: 1.5;
+        animation: todo-mono-9q8-soft-fade var(--todo-mono-9q8-motion-med) ease both;
+        transition:
+          background-color var(--todo-mono-9q8-motion-slow) ease,
+          border-color var(--todo-mono-9q8-motion-slow) ease,
+          color var(--todo-mono-9q8-motion-slow) ease;
+      }
+
+      .todo-mono-9q8-footer-area {
+        min-height: 112px;
+        margin-top: 18px;
+      }
+
+      .todo-mono-9q8-summary-line {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 14px;
+        min-height: 24px;
+        margin-bottom: 12px;
+      }
+
+      .todo-mono-9q8-remaining {
+        margin: 0;
+        color: var(--todo-mono-9q8-main-text);
+        font-size: 0.95rem;
+        font-style: italic;
+        font-weight: 800;
+        line-height: 1.45;
+        transition: color var(--todo-mono-9q8-motion-slow) ease;
+      }
+
+      .todo-mono-9q8-clear-button {
+        border: 0;
+        background: transparent;
+        color: var(--todo-mono-9q8-action-text);
+        padding: 6px 0 6px 8px;
+        font-size: 0.83rem;
+        font-style: italic;
+        font-weight: 750;
+        cursor: pointer;
+        white-space: nowrap;
+        transition:
+          color var(--todo-mono-9q8-motion-fast) ease,
+          opacity var(--todo-mono-9q8-motion-fast) ease;
+      }
+
+      .todo-mono-9q8-clear-button:hover {
+        color: var(--todo-mono-9q8-action-text-hover);
+      }
+
+      .todo-mono-9q8-clear-button:focus-visible {
+        outline: 3px solid var(--todo-mono-9q8-focus-ring);
+        outline-offset: 3px;
+        border-radius: 8px;
+      }
+
+      .todo-mono-9q8-quote {
+        min-height: 44px;
+        margin: 0;
+        color: var(--todo-mono-9q8-muted-text);
+        font-size: 0.92rem;
+        font-style: italic;
+        font-weight: 500;
+        line-height: 1.45;
+        transition: color var(--todo-mono-9q8-motion-slow) ease;
+      }
+
+      @keyframes todo-mono-9q8-row-in {
+        from {
+          opacity: 0;
+          transform: translateY(-7px) scale(0.985);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @keyframes todo-mono-9q8-row-out {
+        from {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+          max-height: 68px;
+        }
+
+        to {
+          opacity: 0;
+          transform: translateY(-7px) scale(0.985);
+          max-height: 0;
+          margin: 0;
+        }
+      }
+
+      @keyframes todo-mono-9q8-soft-fade {
+        from {
+          opacity: 0;
+          transform: translateY(4px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 640px) {
+        .todo-mono-9q8-shell {
+          align-items: stretch;
+          padding: 14px;
+        }
+
+        .todo-mono-9q8-card {
+          min-height: calc(100vh - 28px);
+          align-items: flex-start;
+          padding: 76px 24px 38px;
+          border-radius: 22px;
+        }
+
+        .todo-mono-9q8-panel {
+          width: 100%;
+        }
+
+        .todo-mono-9q8-theme-toggle {
+          top: 20px;
+          right: 20px;
+        }
+
+        .todo-mono-9q8-entry-form {
+          grid-template-columns: minmax(0, 1fr) 44px;
+          gap: 10px;
+        }
+
+        .todo-mono-9q8-list {
+          gap: 12px;
+        }
+
+        .todo-mono-9q8-row {
+          min-height: 48px;
+          grid-template-columns: 25px minmax(0, 1fr) 38px;
+          padding: 7px 8px 7px 13px;
+        }
+
+        .todo-mono-9q8-task-text,
+        .todo-mono-9q8-edit-input,
+        .todo-mono-9q8-new-input {
+          font-size: 0.9rem;
+        }
+
+        .todo-mono-9q8-summary-line {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .todo-mono-9q8-clear-button {
+          padding-left: 0;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+
+        *,
+        *::before,
+        *::after {
+          animation-duration: 1ms !important;
+          animation-iteration-count: 1 !important;
+          scroll-behavior: auto !important;
+          transition-duration: 1ms !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="todo-mono-9q8-root"></div>
+
+    <script type="text/babel" data-type="module">
+      const {
+      useCallback,
+      useEffect,
+      useMemo,
+      useRef,
+      useState
+    } = React;
+
+    const todoMono9q8StorageKeys = {
+      tasks: "todo-mono-9q8-tasks",
+      themeChoice: "todo-mono-9q8-theme-choice"
+    };
+
+    let todoMono9q8KlarUserClientPromise = null;
+
+    function todoMono9q8GetKlarUserClient() {
+      if (!todoMono9q8KlarUserClientPromise) {
+        todoMono9q8KlarUserClientPromise = import("https://editor.klar.website/sdk/v1/users.js")
+          .then(({ createKlarUser }) => createKlarUser({ projectId: 474 }));
+      }
+
+      return todoMono9q8KlarUserClientPromise;
+    }
+
+    const todoMono9q8SeedTasks = [
+      { id: "todo-mono-9q8-seed-1", text: "This is an example of task #1", completed: true },
+      { id: "todo-mono-9q8-seed-2", text: "This is an example of task #2", completed: false },
+      { id: "todo-mono-9q8-seed-3", text: "This is an example of task #3", completed: true },
+      { id: "todo-mono-9q8-seed-4", text: "This is an example of task #4", completed: false },
+      { id: "todo-mono-9q8-seed-5", text: "This is an example of task #5", completed: false }
+    ];
+
+    const todoMono9q8Quotes = [
+      "\"Doing what you love is the cornerstone of having abundance in your life.\" - Wayne Dyer",
+      "\"The secret of getting ahead is getting started.\" - Mark Twain",
+      "\"Simplicity boils down to two steps: identify the essential, eliminate the rest.\" - Leo Babauta",
+      "\"Great things are done by a series of small things brought together.\" - Vincent van Gogh",
+      "\"Focus on being productive instead of busy.\" - Tim Ferriss"
+    ];
+
+    function todoMono9q8CreateId() {
+      if (window.crypto && typeof window.crypto.randomUUID === "function") {
+        return `todo-mono-9q8-${window.crypto.randomUUID()}`;
+      }
+
+      return `todo-mono-9q8-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    }
+
+    function todoMono9q8LoadTasks() {
+      try {
+        const todoMono9q8RawTasks = window.localStorage.getItem(todoMono9q8StorageKeys.tasks);
+
+        if (todoMono9q8RawTasks === null) {
+          return todoMono9q8SeedTasks;
+        }
+
+        const todoMono9q8ParsedTasks = JSON.parse(todoMono9q8RawTasks);
+
+        if (!Array.isArray(todoMono9q8ParsedTasks)) {
+          return todoMono9q8SeedTasks;
+        }
+
+        return todoMono9q8ParsedTasks
+          .filter((todoMono9q8Task) => (
+            todoMono9q8Task &&
+            typeof todoMono9q8Task.id === "string" &&
+            typeof todoMono9q8Task.text === "string"
+          ))
+          .map((todoMono9q8Task) => ({
+            id: todoMono9q8Task.id,
+            text: todoMono9q8Task.text,
+            completed: Boolean(todoMono9q8Task.completed)
+          }));
+      } catch (todoMono9q8Error) {
+        return todoMono9q8SeedTasks;
+      }
+    }
+
+    function todoMono9q8LoadThemeChoice() {
+      try {
+        const todoMono9q8StoredChoice = window.localStorage.getItem(todoMono9q8StorageKeys.themeChoice);
+        return todoMono9q8StoredChoice === "light" || todoMono9q8StoredChoice === "dark"
+          ? todoMono9q8StoredChoice
+          : "system";
+      } catch (todoMono9q8Error) {
+        return "system";
+      }
+    }
+
+    function todoMono9q8GetSystemTheme() {
+      return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    }
+
+    function TodoMono9q8SunIcon() {
+      return (
+        <svg className="todo-mono-9q8-theme-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M12 4.6V2.4M12 21.6v-2.2M4.6 12H2.4M21.6 12h-2.2M6.76 6.76 5.2 5.2M18.8 18.8l-1.56-1.56M17.24 6.76 18.8 5.2M5.2 18.8l1.56-1.56"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.9"
+            strokeLinecap="round"
+          />
+          <circle
+            cx="12"
+            cy="12"
+            r="4.2"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.9"
+          />
+        </svg>
+      );
+    }
+
+    function TodoMono9q8MoonIcon() {
+      return (
+        <svg className="todo-mono-9q8-theme-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M20.35 14.28A7.83 7.83 0 0 1 9.72 3.65a8.56 8.56 0 1 0 10.63 10.63Z"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.9"
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+    }
+
+    function TodoMono9q8PlusIcon() {
+      return (
+        <svg className="todo-mono-9q8-plus-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M12 5v14M5 12h14"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.1"
+            strokeLinecap="round"
+          />
+        </svg>
+      );
+    }
+
+    function TodoMono9q8TaskRow({
+      todoMono9q8Task,
+      todoMono9q8IsExiting,
+      todoMono9q8OnToggle,
+      todoMono9q8OnDelete,
+      todoMono9q8OnRename
+    }) {
+      const [todoMono9q8IsEditing, setTodoMono9q8IsEditing] = useState(false);
+      const [todoMono9q8DraftText, setTodoMono9q8DraftText] = useState(todoMono9q8Task.text);
+      const todoMono9q8EditInputRef = useRef(null);
+      const todoMono9q8CheckboxId = `todo-mono-9q8-checkbox-${todoMono9q8Task.id}`;
+
+      useEffect(() => {
+        if (todoMono9q8IsEditing && todoMono9q8EditInputRef.current) {
+          todoMono9q8EditInputRef.current.focus();
+          todoMono9q8EditInputRef.current.select();
+        }
+      }, [todoMono9q8IsEditing]);
+
+      useEffect(() => {
+        if (!todoMono9q8IsEditing) {
+          setTodoMono9q8DraftText(todoMono9q8Task.text);
+        }
+      }, [todoMono9q8Task.text, todoMono9q8IsEditing]);
+
+      const todoMono9q8StartEdit = useCallback((todoMono9q8Event) => {
+        todoMono9q8Event.stopPropagation();
+        setTodoMono9q8DraftText(todoMono9q8Task.text);
+        setTodoMono9q8IsEditing(true);
+      }, [todoMono9q8Task.text]);
+
+      const todoMono9q8SaveEdit = useCallback(() => {
+        const todoMono9q8NextText = todoMono9q8DraftText.trim();
+        setTodoMono9q8IsEditing(false);
+
+        if (!todoMono9q8NextText) {
+          todoMono9q8OnDelete(todoMono9q8Task.id);
+          return;
+        }
+
+        if (todoMono9q8NextText !== todoMono9q8Task.text) {
+          todoMono9q8OnRename(todoMono9q8Task.id, todoMono9q8NextText);
+        }
+      }, [todoMono9q8DraftText, todoMono9q8OnDelete, todoMono9q8OnRename, todoMono9q8Task.id, todoMono9q8Task.text]);
+
+      const todoMono9q8CancelEdit = useCallback(() => {
+        setTodoMono9q8DraftText(todoMono9q8Task.text);
+        setTodoMono9q8IsEditing(false);
+      }, [todoMono9q8Task.text]);
+
+      const todoMono9q8HandleEditKeyDown = useCallback((todoMono9q8Event) => {
+        if (todoMono9q8Event.key === "Enter") {
+          todoMono9q8Event.preventDefault();
+          todoMono9q8SaveEdit();
+        }
+
+        if (todoMono9q8Event.key === "Escape") {
+          todoMono9q8Event.preventDefault();
+          todoMono9q8CancelEdit();
+        }
+      }, [todoMono9q8CancelEdit, todoMono9q8SaveEdit]);
+
+      const todoMono9q8HandleTextKeyDown = useCallback((todoMono9q8Event) => {
+        if (todoMono9q8Event.key === "Enter") {
+          todoMono9q8StartEdit(todoMono9q8Event);
+        }
+      }, [todoMono9q8StartEdit]);
+
+      return (
+        <li
+          className="todo-mono-9q8-task-item"
+          data-exiting={todoMono9q8IsExiting ? "true" : "false"}
+        >
+          <div
+            className="todo-mono-9q8-row"
+            data-completed={todoMono9q8Task.completed ? "true" : "false"}
+            onClick={() => {
+              if (!todoMono9q8IsEditing) {
+                todoMono9q8OnToggle(todoMono9q8Task.id);
+              }
+            }}
+          >
+            <input
+              id={todoMono9q8CheckboxId}
+              className="todo-mono-9q8-checkbox"
+              type="checkbox"
+              checked={todoMono9q8Task.completed}
+              onClick={(todoMono9q8Event) => todoMono9q8Event.stopPropagation()}
+              onChange={() => todoMono9q8OnToggle(todoMono9q8Task.id)}
+            />
+            <label className="todo-mono-9q8-hidden-label" htmlFor={todoMono9q8CheckboxId}>
+              {todoMono9q8Task.completed ? "Mark incomplete:" : "Mark complete:"} {todoMono9q8Task.text}
+            </label>
+
+            {todoMono9q8IsEditing ? (
+              <input
+                ref={todoMono9q8EditInputRef}
+                className="todo-mono-9q8-edit-input"
+                value={todoMono9q8DraftText}
+                aria-label={`Edit ${todoMono9q8Task.text}`}
+                onClick={(todoMono9q8Event) => todoMono9q8Event.stopPropagation()}
+                onChange={(todoMono9q8Event) => setTodoMono9q8DraftText(todoMono9q8Event.target.value)}
+                onKeyDown={todoMono9q8HandleEditKeyDown}
+                onBlur={todoMono9q8SaveEdit}
+              />
+            ) : (
+              <button
+                type="button"
+                className="todo-mono-9q8-text-button"
+                aria-label={`Edit task: ${todoMono9q8Task.text}`}
+                title="Double-click to edit"
+                onDoubleClick={todoMono9q8StartEdit}
+                onKeyDown={todoMono9q8HandleTextKeyDown}
+              >
+                <span className="todo-mono-9q8-task-text">{todoMono9q8Task.text}</span>
+              </button>
+            )}
+
+            <button
+              type="button"
+              className="todo-mono-9q8-delete-button"
+              aria-label={`Delete task: ${todoMono9q8Task.text}`}
+              onClick={(todoMono9q8Event) => {
+                todoMono9q8Event.stopPropagation();
+                todoMono9q8OnDelete(todoMono9q8Task.id);
+              }}
+            >
+              <span className="todo-mono-9q8-delete-icon" aria-hidden="true">×</span>
+            </button>
+          </div>
+        </li>
+      );
+    }
+
+    function TodoMono9q8App() {
+      const [todoMono9q8Tasks, setTodoMono9q8Tasks] = useState(todoMono9q8LoadTasks);
+      const [todoMono9q8NewText, setTodoMono9q8NewText] = useState("");
+      const [todoMono9q8ExitingIds, setTodoMono9q8ExitingIds] = useState(() => new Set());
+      const [todoMono9q8ThemeChoice, setTodoMono9q8ThemeChoice] = useState(todoMono9q8LoadThemeChoice);
+      const [todoMono9q8SystemTheme, setTodoMono9q8SystemTheme] = useState(todoMono9q8GetSystemTheme);
+      const [todoMono9q8AuthUser, setTodoMono9q8AuthUser] = useState(null);
+      const [todoMono9q8AuthLoading, setTodoMono9q8AuthLoading] = useState(true);
+      const todoMono9q8InputRef = useRef(null);
+      const todoMono9q8SkipSaveRef = useRef(false);
+      const todoMono9q8TasksRef = useRef(todoMono9q8Tasks);
+
+      const todoMono9q8Quote = useMemo(() => {
+        const todoMono9q8Index = Math.floor(Math.random() * todoMono9q8Quotes.length);
+        return todoMono9q8Quotes[todoMono9q8Index];
+      }, []);
+
+      const todoMono9q8ResolvedTheme = todoMono9q8ThemeChoice === "system"
+        ? todoMono9q8SystemTheme
+        : todoMono9q8ThemeChoice;
+
+      const todoMono9q8RemainingCount = useMemo(() => (
+        todoMono9q8Tasks.filter((todoMono9q8Task) => !todoMono9q8Task.completed).length
+      ), [todoMono9q8Tasks]);
+
+      const todoMono9q8HasCompletedTasks = useMemo(() => (
+        todoMono9q8Tasks.some((todoMono9q8Task) => todoMono9q8Task.completed)
+      ), [todoMono9q8Tasks]);
+
+      const todoMono9q8AuthName = useMemo(() => {
+        if (!todoMono9q8AuthUser) return "";
+        return todoMono9q8AuthUser.name ||
+          todoMono9q8AuthUser.displayName ||
+          todoMono9q8AuthUser.email ||
+          "Signed in";
+      }, [todoMono9q8AuthUser]);
+
+      useEffect(() => {
+        let todoMono9q8IsMounted = true;
+        let todoMono9q8Unsubscribe = null;
+
+        todoMono9q8GetKlarUserClient()
+          .then(async (todoMono9q8UserClient) => {
+            if (!todoMono9q8IsMounted) return;
+
+            if (typeof todoMono9q8UserClient.onChange === "function") {
+              todoMono9q8Unsubscribe = todoMono9q8UserClient.onChange((todoMono9q8NextUser) => {
+                if (!todoMono9q8IsMounted) return;
+                setTodoMono9q8AuthUser(todoMono9q8NextUser || null);
+                setTodoMono9q8AuthLoading(false);
+              });
+            }
+
+            const todoMono9q8CurrentUser = await todoMono9q8UserClient.getUser();
+            if (!todoMono9q8IsMounted) return;
+            setTodoMono9q8AuthUser(todoMono9q8CurrentUser || null);
+            setTodoMono9q8AuthLoading(false);
+          })
+          .catch((todoMono9q8Error) => {
+            console.warn("Could not initialize login.", todoMono9q8Error);
+            if (todoMono9q8IsMounted) {
+              setTodoMono9q8AuthLoading(false);
+            }
+          });
+
+        return () => {
+          todoMono9q8IsMounted = false;
+          if (typeof todoMono9q8Unsubscribe === "function") {
+            todoMono9q8Unsubscribe();
+          }
+        };
+      }, []);
+
+      useEffect(() => {
+        todoMono9q8TasksRef.current = todoMono9q8Tasks;
+      }, [todoMono9q8Tasks]);
+
+      useEffect(() => {
+        if (todoMono9q8AuthLoading) return;
+
+        todoMono9q8SkipSaveRef.current = true;
+
+        if (todoMono9q8AuthUser) {
+          todoMono9q8GetKlarUserClient()
+            .then(async (todoMono9q8UserClient) => {
+              const todoMono9q8DbTasks = await todoMono9q8UserClient.data.get("tasks");
+
+              if (Array.isArray(todoMono9q8DbTasks)) {
+                todoMono9q8SkipSaveRef.current = true;
+                setTodoMono9q8Tasks(
+                  todoMono9q8DbTasks
+                    .filter((todoMono9q8Task) => (
+                      todoMono9q8Task &&
+                      typeof todoMono9q8Task.id === "string" &&
+                      typeof todoMono9q8Task.text === "string"
+                    ))
+                    .map((todoMono9q8Task) => ({
+                      id: todoMono9q8Task.id,
+                      text: todoMono9q8Task.text,
+                      completed: Boolean(todoMono9q8Task.completed)
+                    }))
+                );
+              } else {
+                await todoMono9q8UserClient.data.set(
+                  "tasks",
+                  todoMono9q8TasksRef.current.map((todoMono9q8Task) => ({
+                    id: todoMono9q8Task.id,
+                    text: todoMono9q8Task.text,
+                    completed: todoMono9q8Task.completed
+                  }))
+                );
+              }
+            })
+            .catch((todoMono9q8Error) => {
+              console.warn("Could not load tasks from DB.", todoMono9q8Error);
+            });
+        } else {
+          setTodoMono9q8Tasks(todoMono9q8LoadTasks());
+        }
+      }, [todoMono9q8AuthUser, todoMono9q8AuthLoading]);
+
+      useEffect(() => {
+        if (todoMono9q8SkipSaveRef.current) {
+          todoMono9q8SkipSaveRef.current = false;
+          return;
+        }
+
+        const todoMono9q8SerializedTasks = todoMono9q8Tasks.map((todoMono9q8Task) => ({
+          id: todoMono9q8Task.id,
+          text: todoMono9q8Task.text,
+          completed: todoMono9q8Task.completed
+        }));
+
+        if (todoMono9q8AuthUser) {
+          todoMono9q8GetKlarUserClient()
+            .then((todoMono9q8UserClient) => (
+              todoMono9q8UserClient.data.set("tasks", todoMono9q8SerializedTasks)
+            ))
+            .catch((todoMono9q8Error) => {
+              console.warn("Could not save tasks to DB.", todoMono9q8Error);
+            });
+        } else {
+          try {
+            window.localStorage.setItem(
+              todoMono9q8StorageKeys.tasks,
+              JSON.stringify(todoMono9q8SerializedTasks)
+            );
+          } catch (todoMono9q8Error) {
+            console.warn("Could not save tasks.", todoMono9q8Error);
+          }
+        }
+      }, [todoMono9q8Tasks, todoMono9q8AuthUser]);
+
+      useEffect(() => {
+        document.documentElement.setAttribute("data-theme", todoMono9q8ResolvedTheme);
+        document.documentElement.style.colorScheme = todoMono9q8ResolvedTheme;
+      }, [todoMono9q8ResolvedTheme]);
+
+      useEffect(() => {
+        if (!window.matchMedia) return undefined;
+
+        const todoMono9q8MediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+        const todoMono9q8HandleMediaChange = (todoMono9q8Event) => {
+          setTodoMono9q8SystemTheme(todoMono9q8Event.matches ? "dark" : "light");
+        };
+
+        if (typeof todoMono9q8MediaQuery.addEventListener === "function") {
+          todoMono9q8MediaQuery.addEventListener("change", todoMono9q8HandleMediaChange);
+          return () => todoMono9q8MediaQuery.removeEventListener("change", todoMono9q8HandleMediaChange);
+        }
+
+        todoMono9q8MediaQuery.addListener(todoMono9q8HandleMediaChange);
+        return () => todoMono9q8MediaQuery.removeListener(todoMono9q8HandleMediaChange);
+      }, []);
+
+      const todoMono9q8AddTask = useCallback(() => {
+        const todoMono9q8TrimmedText = todoMono9q8NewText.trim();
+
+        if (!todoMono9q8TrimmedText) {
+          if (todoMono9q8InputRef.current) {
+            todoMono9q8InputRef.current.focus();
+          }
+          return;
+        }
+
+        setTodoMono9q8Tasks((todoMono9q8CurrentTasks) => [
+          {
+            id: todoMono9q8CreateId(),
+            text: todoMono9q8TrimmedText,
+            completed: false
+          },
+          ...todoMono9q8CurrentTasks
+        ]);
+
+        setTodoMono9q8NewText("");
+
+        window.requestAnimationFrame(() => {
+          if (todoMono9q8InputRef.current) {
+            todoMono9q8InputRef.current.focus();
+          }
+        });
+      }, [todoMono9q8NewText]);
+
+      const todoMono9q8ToggleTask = useCallback((todoMono9q8TaskId) => {
+        setTodoMono9q8Tasks((todoMono9q8CurrentTasks) => (
+          todoMono9q8CurrentTasks.map((todoMono9q8Task) => (
+            todoMono9q8Task.id === todoMono9q8TaskId
+              ? { ...todoMono9q8Task, completed: !todoMono9q8Task.completed }
+              : todoMono9q8Task
+          ))
+        ));
+      }, []);
+
+      const todoMono9q8RenameTask = useCallback((todoMono9q8TaskId, todoMono9q8NextText) => {
+        setTodoMono9q8Tasks((todoMono9q8CurrentTasks) => (
+          todoMono9q8CurrentTasks.map((todoMono9q8Task) => (
+            todoMono9q8Task.id === todoMono9q8TaskId
+              ? { ...todoMono9q8Task, text: todoMono9q8NextText }
+              : todoMono9q8Task
+          ))
+        ));
+      }, []);
+
+      const todoMono9q8DeleteTask = useCallback((todoMono9q8TaskId) => {
+        setTodoMono9q8ExitingIds((todoMono9q8CurrentIds) => {
+          const todoMono9q8NextIds = new Set(todoMono9q8CurrentIds);
+          todoMono9q8NextIds.add(todoMono9q8TaskId);
+          return todoMono9q8NextIds;
+        });
+
+        window.setTimeout(() => {
+          setTodoMono9q8Tasks((todoMono9q8CurrentTasks) => (
+            todoMono9q8CurrentTasks.filter((todoMono9q8Task) => todoMono9q8Task.id !== todoMono9q8TaskId)
+          ));
+
+          setTodoMono9q8ExitingIds((todoMono9q8CurrentIds) => {
+            const todoMono9q8NextIds = new Set(todoMono9q8CurrentIds);
+            todoMono9q8NextIds.delete(todoMono9q8TaskId);
+            return todoMono9q8NextIds;
+          });
+        }, 170);
+      }, []);
+
+      const todoMono9q8ClearCompleted = useCallback(() => {
+        const todoMono9q8CompletedIds = todoMono9q8Tasks
+          .filter((todoMono9q8Task) => todoMono9q8Task.completed)
+          .map((todoMono9q8Task) => todoMono9q8Task.id);
+
+        if (!todoMono9q8CompletedIds.length) return;
+
+        setTodoMono9q8ExitingIds((todoMono9q8CurrentIds) => {
+          const todoMono9q8NextIds = new Set(todoMono9q8CurrentIds);
+          todoMono9q8CompletedIds.forEach((todoMono9q8TaskId) => todoMono9q8NextIds.add(todoMono9q8TaskId));
+          return todoMono9q8NextIds;
+        });
+
+        window.setTimeout(() => {
+          setTodoMono9q8Tasks((todoMono9q8CurrentTasks) => (
+            todoMono9q8CurrentTasks.filter((todoMono9q8Task) => !todoMono9q8Task.completed)
+          ));
+
+          setTodoMono9q8ExitingIds(new Set());
+        }, 170);
+      }, [todoMono9q8Tasks]);
+
+      const todoMono9q8SwitchTheme = useCallback(() => {
+        const todoMono9q8NextTheme = todoMono9q8ResolvedTheme === "dark" ? "light" : "dark";
+        setTodoMono9q8ThemeChoice(todoMono9q8NextTheme);
+
+        try {
+          window.localStorage.setItem(todoMono9q8StorageKeys.themeChoice, todoMono9q8NextTheme);
+        } catch (todoMono9q8Error) {
+          console.warn("Could not save theme choice.", todoMono9q8Error);
+        }
+      }, [todoMono9q8ResolvedTheme]);
+
+      const todoMono9q8SignIn = useCallback(async () => {
+        setTodoMono9q8AuthLoading(true);
+
+        try {
+          const todoMono9q8UserClient = await todoMono9q8GetKlarUserClient();
+          const todoMono9q8NextUser = await todoMono9q8UserClient.signIn();
+          const todoMono9q8CurrentUser = todoMono9q8NextUser || await todoMono9q8UserClient.getUser();
+          setTodoMono9q8AuthUser(todoMono9q8CurrentUser || null);
+        } catch (todoMono9q8Error) {
+          console.warn("Could not sign in.", todoMono9q8Error);
+        } finally {
+          setTodoMono9q8AuthLoading(false);
+        }
+      }, []);
+
+      const todoMono9q8SignOut = useCallback(async () => {
+        setTodoMono9q8AuthLoading(true);
+
+        try {
+          const todoMono9q8UserClient = await todoMono9q8GetKlarUserClient();
+          await todoMono9q8UserClient.signOut();
+          setTodoMono9q8AuthUser(null);
+        } catch (todoMono9q8Error) {
+          console.warn("Could not sign out.", todoMono9q8Error);
+        } finally {
+          setTodoMono9q8AuthLoading(false);
+        }
+      }, []);
+
+      const todoMono9q8HandleFormSubmit = useCallback((todoMono9q8Event) => {
+        todoMono9q8Event.preventDefault();
+        todoMono9q8AddTask();
+      }, [todoMono9q8AddTask]);
+
+      return (
+        <main className="todo-mono-9q8-shell">
+          <section className="todo-mono-9q8-card" aria-labelledby="todo-mono-9q8-title">
+            <button
+              type="button"
+              className="todo-mono-9q8-theme-toggle"
+              aria-label={todoMono9q8ResolvedTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+              aria-pressed={todoMono9q8ResolvedTheme === "dark"}
+              onClick={todoMono9q8SwitchTheme}
+            >
+              {todoMono9q8ResolvedTheme === "dark" ? <TodoMono9q8SunIcon /> : <TodoMono9q8MoonIcon />}
+            </button>
+
+            <div className="todo-mono-9q8-panel">
+              <div className="todo-mono-9q8-topbar">
+                <h1 id="todo-mono-9q8-title" className="todo-mono-9q8-heading">Your To Do</h1>
+
+                <div className="todo-mono-9q8-auth-area">
+                  {todoMono9q8AuthUser ? (
+                    <React.Fragment>
+                      <span
+                        className="todo-mono-9q8-auth-name"
+                        title={todoMono9q8AuthUser.email || todoMono9q8AuthName}
+                      >
+                        {todoMono9q8AuthName}
+                      </span>
+                      <button
+                        type="button"
+                        className="todo-mono-9q8-auth-button"
+                        disabled={todoMono9q8AuthLoading}
+                        onClick={todoMono9q8SignOut}
+                      >
+                        Sign out
+                      </button>
+                    </React.Fragment>
+                  ) : (
+                    <button
+                      type="button"
+                      className="todo-mono-9q8-auth-button"
+                      disabled={todoMono9q8AuthLoading}
+                      onClick={todoMono9q8SignIn}
+                    >
+                      {todoMono9q8AuthLoading ? "Checking…" : "Sign in"}
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <form className="todo-mono-9q8-entry-form" onSubmit={todoMono9q8HandleFormSubmit}>
+                <input
+                  ref={todoMono9q8InputRef}
+                  className="todo-mono-9q8-new-input"
+                  type="text"
+                  value={todoMono9q8NewText}
+                  placeholder="Add new task"
+                  aria-label="Add new task"
+                  autoComplete="off"
+                  onChange={(todoMono9q8Event) => setTodoMono9q8NewText(todoMono9q8Event.target.value)}
+                />
+                <button type="submit" className="todo-mono-9q8-add-button" aria-label="Add task">
+                  <TodoMono9q8PlusIcon />
+                </button>
+              </form>
+
+              {todoMono9q8Tasks.length > 0 ? (
+                <ul className="todo-mono-9q8-list" aria-label="To-do list">
+                  {todoMono9q8Tasks.map((todoMono9q8Task) => (
+                    <TodoMono9q8TaskRow
+                      key={todoMono9q8Task.id}
+                      todoMono9q8Task={todoMono9q8Task}
+                      todoMono9q8IsExiting={todoMono9q8ExitingIds.has(todoMono9q8Task.id)}
+                      todoMono9q8OnToggle={todoMono9q8ToggleTask}
+                      todoMono9q8OnDelete={todoMono9q8DeleteTask}
+                      todoMono9q8OnRename={todoMono9q8RenameTask}
+                    />
+                  ))}
+                </ul>
+              ) : (
+                <div className="todo-mono-9q8-empty-state" role="status">
+                  Nothing to do 🎉<br />
+                  Add your first task above.
+                </div>
+              )}
+
+              <footer className="todo-mono-9q8-footer-area">
+                <div className="todo-mono-9q8-summary-line">
+                  <p className="todo-mono-9q8-remaining" aria-live="polite" aria-atomic="true">
+                    Your remaining todos : {todoMono9q8RemainingCount}
+                  </p>
+
+                  {todoMono9q8HasCompletedTasks && (
+                    <button
+                      type="button"
+                      className="todo-mono-9q8-clear-button"
+                      onClick={todoMono9q8ClearCompleted}
+                    >
+                      Clear completed
+                    </button>
+                  )}
+                </div>
+
+                <p className="todo-mono-9q8-quote">{todoMono9q8Quote}</p>
+              </footer>
+            </div>
+          </section>
+        </main>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("todo-mono-9q8-root")).render(<TodoMono9q8App />);
+  </script>
+  </body>
+</html>
