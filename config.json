@@ -30,8 +30,8 @@
           },
           {
             "tag": "article",
-            "html": "<article class=\"vkn-treat-card\"><div class=\"vkn-treat-card__img\"><img src=\"https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&amp;fit=crop&amp;w=1600&amp;q=80\" alt=\"Läkare som undersöker en patient\" data-klar-clipped=\"1\"></div><div class=\"vkn-treat-card__body\"><h3>Hälsoundersökning 7</h3><p data-klar-clipped=\"1\">Grundlig genomgång av din hälsa med blodprov, EKG och personlig rådgivning. 7</p><div class=\"vkn-treat-card__meta\"><span class=\"vkn-treat-card__price\">Från 1 290 kr</span><span class=\"vkn-treat-card__time\">60 min</span></div></div></article>",
-            "text": "Hälsoundersökning 7Grundlig genomgång av din hälsa med blodprov, EKG och personlig rådgivning. 7Från 1 290 kr60 min"
+            "html": "<article class=\"vkn-treat-card\"><div class=\"vkn-treat-card__img\"><img src=\"https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&amp;fit=crop&amp;w=1600&amp;q=80\" alt=\"Läkare som undersöker en patient\"></div><div class=\"vkn-treat-card__body\"><h3>Hälsoundersökning 7</h3><p>Grundlig genomgång av din hälsa med blodprov, EKG och personlig rådgivning. 7</p><div class=\"vkn-treat-card__meta\"><span class=\"vkn-treat-card__price\">Från 1 290 kr 7</span><span class=\"vkn-treat-card__time\">60 min 7</span></div></div></article>",
+            "text": "Hälsoundersökning 7Grundlig genomgång av din hälsa med blodprov, EKG och personlig rådgivning. 7Från 1 290 kr 760 min 7"
           },
           {
             "tag": "article",
@@ -50,17 +50,17 @@
         "treatments": [
           {
             "tag": "article",
-            "html": "<article class=\"vkn-treat-card\"><div class=\"vkn-treat-card__img\"><img src=\"https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&amp;fit=crop&amp;w=1600&amp;q=80\" alt=\"Hudvårdsbehandling på klinik\" data-klar-clipped=\"1\"></div><div class=\"vkn-treat-card__body\"><h3>Medicinsk hudvård</h3><p>Skonsamma behandlingar mot akne, pigmentering och åldrande hud.</p><div class=\"vkn-treat-card__meta\"><span class=\"vkn-treat-card__price\">Från 950 kr</span><span class=\"vkn-treat-card__time\">45 min</span></div></div></article>",
-            "text": "Medicinsk hudvårdSkonsamma behandlingar mot akne, pigmentering och åldrande hud.Från 950 kr45 min"
+            "html": "<article class=\"vkn-treat-card\"><div class=\"vkn-treat-card__img\"><img src=\"https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&amp;fit=crop&amp;w=1600&amp;q=80\" alt=\"Hudvårdsbehandling på klinik\" data-klar-clipped=\"1\"></div><div class=\"vkn-treat-card__body\"><h3>Medicinsk hudvård 7</h3><p>Skonsamma behandlingar mot akne, pigmentering och åldrande hud. 7</p><div class=\"vkn-treat-card__meta\"><span class=\"vkn-treat-card__price\">Från 950 kr</span><span class=\"vkn-treat-card__time\">45 min</span></div></div></article>",
+            "text": "Medicinsk hudvård 7Skonsamma behandlingar mot akne, pigmentering och åldrande hud. 7Från 950 kr45 min"
           },
           {
             "tag": "article",
-            "html": "<article class=\"vkn-treat-card\"><div class=\"vkn-treat-card__img\"><img src=\"https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&amp;fit=crop&amp;w=1600&amp;q=80\" alt=\"Hudvårdsbehandling på klinik\" data-klar-clipped=\"1\"></div><div class=\"vkn-treat-card__body\"><h3>Medicinsk hudvård</h3><p>Skonsamma behandlingar mot akne, pigmentering och åldrande hud.</p><div class=\"vkn-treat-card__meta\"><span class=\"vkn-treat-card__price\">Från 950 kr</span><span class=\"vkn-treat-card__time\">45 min</span></div></div></article>",
-            "text": "Medicinsk hudvårdSkonsamma behandlingar mot akne, pigmentering och åldrande hud.Från 950 kr45 min"
+            "html": "<article class=\"vkn-treat-card\"><div class=\"vkn-treat-card__img\"><img src=\"https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&amp;fit=crop&amp;w=1600&amp;q=80\" alt=\"Hudvårdsbehandling på klinik\"></div><div class=\"vkn-treat-card__body\"><h3>Medicinsk hudvård 7</h3><p>Skonsamma behandlingar mot akne, pigmentering och åldrande hud. 7</p><div class=\"vkn-treat-card__meta\"><span class=\"vkn-treat-card__price\">Från 950 kr</span><span class=\"vkn-treat-card__time\">45 min</span></div></div></article>",
+            "text": "Medicinsk hudvård 7Skonsamma behandlingar mot akne, pigmentering och åldrande hud. 7Från 950 kr45 min"
           },
           {
             "tag": "article",
-            "html": "<article class=\"vkn-treat-card\"><div class=\"vkn-treat-card__img\"><img src=\"https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&amp;fit=crop&amp;w=1600&amp;q=80\" alt=\"Hudvårdsbehandling på klinik\" data-klar-clipped=\"1\"></div><div class=\"vkn-treat-card__body\"><h3>Medicinsk hudvård</h3><p>Skonsamma behandlingar mot akne, pigmentering och åldrande hud.</p><div class=\"vkn-treat-card__meta\"><span class=\"vkn-treat-card__price\">Från 950 kr</span><span class=\"vkn-treat-card__time\">45 min</span></div></div></article>",
+            "html": "<article class=\"vkn-treat-card\"><div class=\"vkn-treat-card__img\"><img src=\"https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&amp;fit=crop&amp;w=1600&amp;q=80\" alt=\"Hudvårdsbehandling på klinik\"></div><div class=\"vkn-treat-card__body\"><h3>Medicinsk hudvård</h3><p>Skonsamma behandlingar mot akne, pigmentering och åldrande hud.</p><div class=\"vkn-treat-card__meta\"><span class=\"vkn-treat-card__price\">Från 950 kr</span><span class=\"vkn-treat-card__time\">45 min</span></div></div></article>",
             "text": "Medicinsk hudvårdSkonsamma behandlingar mot akne, pigmentering och åldrande hud.Från 950 kr45 min"
           },
           {
@@ -99,8 +99,12 @@
       "name": "om-oss.html",
       "editableElements": ".vkn-page-head h1:field(title:Titel, name:title, type:string, section:hero),\n.vkn-page-head p:field(title:Beskrivning, name:description, type:text, section:hero),\n\nvkn-about-grid h2:field(title:About title, name:aboutTitle, type:string, section:About),\n.vkn-about-grid img:field(title:Image, name:aboutImage, type:image, col:6),\n.vkn-about-grid div:field(title:Text, name:aboutText, type:array, col:6, options(layout:blocks)),\n\n.vkn-team      :field(title:Team, name:team, type:array, section: Treatments, options(layout:blocks)),",
       "content": {
-        "title": "Om oss 6",
-        "description": "Vi är en privatklinik som tror på vård med tid, kompetens och omtanke. 6"
+        "title": "Om oss 7",
+        "description": "Vi är en privatklinik som tror på vård med tid, kompetens och omtanke. 7",
+        "aboutImage": {
+          "src": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=80",
+          "alt": "7 Vårdpersonal i samtal på kliniken"
+        }
       }
     }
   ],
