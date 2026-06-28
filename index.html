@@ -12,33 +12,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
     <link
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&amp;family=Inter:wght@400;500;600&amp;display=swap"
-      rel="stylesheet"
-    />
+      rel="stylesheet" />
 
-    <script
-      src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"
-      crossorigin=""
-    ></script>
-    <script
-      src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"
-      crossorigin=""
-    ></script>
-    <script
-      src="https://unpkg.com/history@4.10.1/umd/history.min.js"
-      crossorigin=""
-    ></script>
-    <script
-      src="https://unpkg.com/react-router@5.3.4/umd/react-router.min.js"
-      crossorigin=""
-    ></script>
-    <script
-      src="https://unpkg.com/react-router-dom@5.3.4/umd/react-router-dom.min.js"
-      crossorigin=""
-    ></script>
-    <script
-      src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"
-      crossorigin=""
-    ></script>
+    <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin=""></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin=""></script>
+    <script src="https://unpkg.com/history@4.10.1/umd/history.min.js" crossorigin=""></script>
+    <script src="https://unpkg.com/react-router@5.3.4/umd/react-router.min.js" crossorigin=""></script>
+    <script src="https://unpkg.com/react-router-dom@5.3.4/umd/react-router-dom.min.js" crossorigin=""></script>
+    <script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js" crossorigin=""></script>
 
     <style>
       :root {
@@ -796,9 +777,9 @@
       // load) — do NOT make this app-specific. Sibling of Klar's own "klar"
       // settings key, not nested inside it. Scoped PER PROJECT so different
       // projects don't share a route; Klar builds the same key from the active
-      // project id. Falls back to 474 (same default as the SDK client) when
+      // project id. Falls back to 475 (same default as the SDK client) when
       // window.__KLAR_PROJECT_ID__ isn't injected.
-      const KLAR_ROUTE_KEY = "klar:spa-route:" + (window.__KLAR_PROJECT_ID__ || 474);
+      const KLAR_ROUTE_KEY = "klar:spa-route:" + (window.__KLAR_PROJECT_ID__ || 475);
       function readStoredRoute() {
         try {
           return localStorage.getItem(KLAR_ROUTE_KEY) || "/";
@@ -827,7 +808,7 @@
       let klarPromise = null;
       function getKlar() {
         if (klarPromise) return klarPromise;
-        const pid = window.__KLAR_PROJECT_ID__ || 474;
+        const pid = window.__KLAR_PROJECT_ID__ || 475;
         if (!pid) return (klarPromise = Promise.resolve(null));
         klarPromise = klarImport(KLAR_SDK_URL)
           .then((m) => m.createKlarClient({ projectId: pid }))
